@@ -285,10 +285,10 @@ const Hero = () => {
       <header className="relative z-30 mx-auto flex w-full max-w-[1600px] items-center justify-between px-5 py-5 sm:px-8 lg:px-12 lg:py-6">
         <a href="#profile" className="group flex items-center gap-2">
           <span className="flex h-9 w-9 items-center justify-center border border-blue-500/50 bg-blue-500/10 text-lg font-extrabold text-blue-400 transition group-hover:bg-blue-500 group-hover:text-white">
-            F
+            DL
           </span>
           <span className="text-sm font-extrabold tracking-[.12em] sm:text-base">
-            PLAYER<span className="text-blue-500">.GG</span>
+            <span className="text-blue-500">VENOM</span>
           </span>
         </a>
 
@@ -485,9 +485,9 @@ const Hero = () => {
           {/* Floating player tag */}
           <div className="absolute bottom-[15%] right-0 z-20 border border-white/10 bg-[#0b101a]/90 px-3 py-2 backdrop-blur-md sm:bottom-[18%] sm:right-[2%] sm:px-5 sm:py-3 lg:right-[3%]">
             <div className="flex items-center gap-2">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-blue-400" />
+              
               <span className="text-[8px] font-bold tracking-[.17em] text-white/70 sm:text-[10px]">
-                PLAYER STATUS
+                STATUS
               </span>
             </div>
             <p className="mt-1 text-xs font-extrabold tracking-wide sm:text-sm">
