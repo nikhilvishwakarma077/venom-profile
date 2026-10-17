@@ -2,10 +2,9 @@
 import { useEffect, useState } from "react";
 import charImg from "../../../public/assets/images/char1.webp";
 import SectionFade from "../SectionFade";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-
 
   const [intro, setIntro] = useState(true);
 
@@ -14,25 +13,11 @@ const Hero = () => {
     return () => clearTimeout(timer);
   }, []);
 
-
-  useEffect(() => {
-    const handleResize = () => setMenuOpen(false);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const links = [
-    { label: "PROFILE", href: "#profile" },
-    { label: "ACHIEVEMENTS", href: "#achievements" },
-    { label: "CONTACT", href: "#contact" },
-  ];
-
   return (
     <section
       id="profile"
       className="ff-hero relative isolate min-h-screen overflow-hidden bg-[#080b12] text-white"
     >
-
 
       {intro && (
         <div className="ff-intro" aria-hidden="true">
@@ -43,8 +28,6 @@ const Hero = () => {
       )}
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
-
         .ff-hero {
           font-family: 'Inter', sans-serif;
           background:
@@ -178,7 +161,6 @@ const Hero = () => {
   }
 }
 
-
 /* Japanese text stays behind the character */
 .ff-hero .jp-atmosphere {
   position: absolute;
@@ -274,77 +256,12 @@ const Hero = () => {
   }
 }
 
-
       `}</style>
 
       {/* Background details */}
       <div className="ff-grid pointer-events-none absolute inset-0 -z-10" />
 
       <div className="ff-glow pointer-events-none absolute right-[4%] top-[17%] -z-10 h-[390px] w-[390px] rounded-full bg-blue-600/10 blur-[110px] sm:h-[550px] sm:w-[550px]" />
-
-      {/* Navbar */}
-      <header className="relative z-30 mx-auto flex w-full max-w-[1600px] items-center justify-between px-5 py-5 sm:px-8 lg:px-12 lg:py-6">
-        <a href="#profile" className="group flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center border border-blue-500/50 bg-blue-500/10 text-lg font-extrabold text-blue-400 transition group-hover:bg-blue-500 group-hover:text-white">
-            DL
-          </span>
-          <span className="text-sm font-extrabold tracking-[.12em] sm:text-base">
-            <span className="text-blue-500">VENOM</span>
-          </span>
-        </a>
-
-        <nav className="hidden items-center gap-8 md:flex lg:gap-10">
-          {links.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="text-[10px] font-bold tracking-[.16em] text-white/55 transition hover:text-blue-400 lg:text-xs"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-
-        <a
-          href="#contact"
-          className="hidden items-center gap-3 border border-white/15 px-5 py-3 text-[10px] font-bold tracking-[.15em] transition hover:border-blue-500 hover:bg-blue-500/10 sm:flex"
-        >
-          LET'S CONNECT <span className="text-blue-400">↗</span>
-        </a>
-
-        <button
-          type="button"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? "Close navigation" : "Open navigation"}
-          aria-expanded={menuOpen}
-          className="flex h-10 w-10 items-center justify-center border border-white/15 text-xl md:hidden"
-        >
-          {menuOpen ? "×" : "☰"}
-        </button>
-      </header>
-
-      {/* Mobile navigation */}
-      {menuOpen && (
-        <nav className="absolute left-0 right-0 top-[76px] z-40 border-y border-white/10 bg-[#0b0f18] px-6 py-5 shadow-2xl md:hidden">
-          {links.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              className="block border-b border-white/5 py-4 text-xs font-bold tracking-[.15em] text-white/75 last:border-0"
-            >
-              {link.label}
-            </a>
-          ))}
-          <a
-            href="#contact"
-            onClick={() => setMenuOpen(false)}
-            className="mt-4 block bg-blue-600 px-4 py-3 text-center text-xs font-bold tracking-widest"
-          >
-            LET'S CONNECT ↗
-          </a>
-        </nav>
-      )}
 
       {/* Hero content */}
       <div className="relative mx-auto grid min-h-[calc(100svh-80px)] w-full max-w-[1600px] grid-cols-1 items-center px-5 pb-10 pt-4 sm:px-8 sm:pt-6 lg:grid-cols-[1fr_1.05fr] lg:px-12 lg:pb-12 lg:pt-0">
@@ -412,22 +329,22 @@ const Hero = () => {
 
           {/* CTA buttons */}
           <div className="ff-reveal ff-delay-3 mt-7 flex flex-wrap gap-3 sm:mt-8">
-            <a
-              href="#achievements"
+            <Link
+              to={"/achievements"}
               className="group inline-flex min-h-12 items-center justify-center gap-4 bg-blue-600 px-5 py-3 text-[10px] font-extrabold tracking-[.14em] transition hover:bg-blue-500 sm:px-7 sm:text-xs"
             >
               VIEW ACHIEVEMENTS
               <span className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
                 ↗
               </span>
-            </a>
+            </Link>
 
-            <a
-              href="#contact"
+            <Link
+              to={"/contact"}
               className="inline-flex min-h-12 items-center justify-center gap-3 border border-white/15 px-5 py-3 text-[10px] font-bold tracking-[.14em] transition hover:border-blue-400 hover:text-blue-400 sm:px-7 sm:text-xs"
             >
               CONTACT PLAYER <span>→</span>
-            </a>
+            </Link>
           </div>
 
           {/* Quick stats */}
@@ -464,7 +381,6 @@ const Hero = () => {
 
           <div className="pointer-events-none absolute bottom-[10%] left-[7%] h-12 w-12 border-b border-l border-blue-400/30 sm:left-[12%] sm:h-20 sm:w-20 lg:bottom-[14%] lg:left-[8%]" />
 
-
           {/* Floating Japanese Anime Typography */}
           <div className="jp-atmosphere" aria-hidden="true">
             <span className="jp-text jp-one">蒼き炎</span>
@@ -474,13 +390,14 @@ const Hero = () => {
             <span className="jp-text jp-five">雷</span>
           </div>
 
-
           {/* Character image */}
           <img
             src={charImg}
             alt="Blue-themed esports warrior character"
             className="ff-character relative z-10 h-full max-h-full w-auto max-w-full object-contain object-bottom"
             fetchPriority="high"
+            loading="eager"
+            decoding="async"
           />
 
           {/* Floating player tag */}

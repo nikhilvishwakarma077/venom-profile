@@ -1,56 +1,84 @@
-// Navbar.jsx
 
-import { ArrowUpRight } from "lucide-react";
+import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
-const Navbar = () => {
-  const navLinks = [
-    { name: "Work", href: "#work" },
-    { name: "About", href: "#about" },
-    { name: "Services", href: "#services" },
-    { name: "Contact", href: "#contact" },
+export default function Navbar({ username = "venom" }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const links = [
+    { label: "HOME", to: "/" },
+    { label: "PROFILE", to: `/${username}` },
+    { label: "CLIPS", to: `/clips` },
+    { label: "ACHIEVEMENTS", to: `/achievements` },
+    { label: "CONTACT", to: "/contact" },
   ];
 
+  const navClass = ({ isActive }) =>
+    `text-[10px] font-bold tracking-[.16em] transition lg:text-xs ${isActive ? "text-blue-400" : "text-white/55 hover:text-blue-400"
+    }`;
+
   return (
-    <nav className="fixed top-0 left-0 z-50 w-full border-b border-blue-300/15 bg-[#071a36]/80 px-6 py-5 backdrop-blur-xl md:px-8">
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between">
-
+    <header className="relative z-50 border-b border-white/5 bg-[#080b12] backdrop-blur-xl">
+      <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-5 py-5 sm:px-8 lg:px-12 lg:py-6">
         {/* Logo */}
-        <a
-          href="/"
-          className="text-xl font-black tracking-tight text-white transition-colors duration-300 hover:text-blue-300 md:text-2xl"
-        >
-          COLLIDER<span className="text-blue-400">.</span>
-        </a>
+        <Link to="/" className="group flex items-center gap-2">
+          <span className="flex h-9 w-9 items-center justify-center border border-blue-500/50 bg-blue-500/10 text-lg font-extrabold text-blue-400 transition group-hover:bg-blue-500 group-hover:text-white">
+            DL
+          </span>
+          <span className="text-sm font-extrabold tracking-[.12em] sm:text-base">
+            <span className="text-blue-500">VENOM</span>
+          </span>
+        </Link>
 
-        {/* Navigation Links */}
-        <div className="hidden items-center gap-10 md:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="relative text-sm font-medium text-blue-100/75 transition-colors duration-300 hover:text-white"
+        {/* Desktop navigation */}
+        <nav className="hidden items-center gap-6 md:flex lg:gap-8">
+          {links.map((link) => (
+            <NavLink
+              key={link.label}
+              to={link.to}
+              end={link.to === "/"}
+              className={navClass}
             >
-              {link.name}
-              <span className="absolute -bottom-2 left-0 h-[2px] w-0 bg-blue-400 transition-all duration-300 hover:w-full" />
-            </a>
+              {link.label}
+            </NavLink>
           ))}
-        </div>
+        </nav>
 
-        {/* CTA */}
-        <a
-          href="#contact"
-          className="group flex items-center gap-4 border border-blue-300/30 bg-blue-500/10 px-4 py-3 text-xs font-semibold tracking-wider text-white transition-all duration-300 hover:border-blue-300/70 hover:bg-blue-500/20"
+
+
+        {/* Mobile menu button */}
+        <button
+          type="button"
+          onClick={() => setMenuOpen((open) => !open)}
+          aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+          aria-expanded={menuOpen}
+          className="flex h-10 w-10 items-center justify-center border border-white/15 text-xl text-white md:hidden"
         >
-          <span>LET'S TALK</span>
-          <ArrowUpRight
-            size={16}
-            className="text-blue-300 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-          />
-        </a>
-
+          {menuOpen ? "×" : "☰"}
+        </button>
       </div>
-    </nav>
-  );
-};
 
-export default Navbar;
+      {/* Mobile navigation */}
+      {menuOpen && (
+        <nav className="absolute left-0 right-0 top-full border-y border-white/10 bg-[#0B1220] px-6 py-4 shadow-2xl md:hidden">
+          {links.map((link) => (
+            <NavLink
+              key={link.label}
+              to={link.to}
+              end={link.to === "/"}
+              onClick={() => setMenuOpen(false)}
+              className={({ isActive }) =>
+                `block border-b border-white/5 py-4 text-xs font-bold tracking-[.15em] last:border-0 ${isActive ? "text-blue-400" : "text-white/75"
+                }`
+              }
+            >
+              {link.label}
+            </NavLink>
+          ))}
+
+
+        </nav>
+      )}
+    </header>
+  );
+}

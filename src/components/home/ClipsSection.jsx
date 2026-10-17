@@ -1,14 +1,13 @@
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import SectionFade from "../SectionFade";
 
 const clips = [
-    { id: "dQw4w9WgXcQ", title: "Insane Clutch Gameplay", duration: "0:42" },
-    { id: "M7lc1UVf-VE", title: "One Tap Highlights", duration: "0:36" },
-    { id: "ysz5S6PUM-U", title: "Tournament Best Moments", duration: "1:12" },
-    { id: "ScMzIvxBSi4", title: "Squad Wipe Highlights", duration: "0:58" },
-    { id: "aqz-KE-bpKQ", title: "Final Zone Clutch", duration: "0:49" },
+    { id: "9DQE2Y2wT1s", title: "FFMAI GRIND BEGINS || TOURNAMENT HIGHLIGHTS", duration: "8:04", name: "PAHADI GAMER" },
+    { id: "NG4-8Fey0Hc", title: "MVP Of Knockout Stage Day 1 🐅 || Qualified For FFMIC LAN 🦧 💙", duration: "7:03", name: "TE CROPSE" },
+    { id: "Ku_CXca8IqA", title: "FFMIC Week 1 Highlights by TAG SHOTO | Team Apex Gaming", duration: "12:52", name: "SHOTO FF" },
+    { id: "zERCe0gUqGw", title: "FFMIC TOP 6 | RAW TOURNAMENT POV | FT. IQOO TG MAFIA", duration: "7:34", name: "MAFIA" },
+    { id: "3pOu1d9TVIE", title: "QUALIFIED FOR THE KNOCKOUT STAGE TOURNAMENT HIGHLIGHTS 💥 BY iQOO TGDELETE🖤🔥", duration: "8:35", name: "TG DELETE" },
 ];
 
 const japaneseTexts = [
@@ -21,15 +20,36 @@ const japaneseTexts = [
     { text: "戦士", className: "jp-seven" },
 ];
 
+const getLayout = () => {
+    if (typeof window === "undefined") return "desktop";
+    if (window.innerWidth < 640) return "mobile";
+    if (window.innerWidth < 1024) return "tablet";
+    return "desktop";
+};
+
+const offsetStep = { mobile: 56, tablet: 190, desktop: 250 };
+
 export default function ClipsSection({ username = "shadow" }) {
     const [active, setActive] = useState(0);
+    const [layout, setLayout] = useState(getLayout);
+
+    // Only update layout state when crossing a responsive breakpoint.
+    useEffect(() => {
+        const handleResize = () => {
+            const nextLayout = getLayout();
+            setLayout((current) => current === nextLayout ? current : nextLayout);
+        };
+
+        window.addEventListener("resize", handleResize, { passive: true });
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     useEffect(() => {
-        const timer = setInterval(() => {
+        const timer = window.setInterval(() => {
             setActive((current) => (current + 1) % clips.length);
         }, 3000);
 
-        return () => clearInterval(timer);
+        return () => window.clearInterval(timer);
     }, []);
 
     const getOffset = (index) => {
@@ -47,41 +67,32 @@ export default function ClipsSection({ username = "shadow" }) {
             id="clips"
             className="clips-section relative isolate overflow-hidden bg-[#070D18] py-10 sm:py-16 lg:py-20"
         >
-            {/* Background glow and grid */}
             <div className="pointer-events-none absolute inset-0 -z-20 bg-[radial-gradient(ellipse_at_50%_45%,rgba(29,78,216,0.2),transparent_70%)]" />
             <div className="clips-grid pointer-events-none absolute inset-0 -z-20" />
 
-            {/* Animated Japanese typography behind cards */}
             <div
                 className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden"
                 aria-hidden="true"
             >
                 {japaneseTexts.map((item) => (
-                    <span
-                        key={item.className}
-                        className={`japanese-text ${item.className}`}
-                    >
+                    <span key={item.className} className={`japanese-text ${item.className}`}>
                         {item.text}
                     </span>
                 ))}
             </div>
 
-            {/* Heading */}
             <div className="relative z-10 mx-auto mb-5 max-w-5xl px-4 text-center sm:mb-8">
                 <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.3em] text-sky-400 sm:text-xs sm:tracking-[0.4em]">
                     Gameplay / Highlights / Competition
                 </p>
-
                 <h2 className="text-3xl font-black uppercase tracking-tight text-white sm:text-5xl md:text-6xl">
                     Featured <span className="text-sky-400">Clips.</span>
                 </h2>
-
                 <p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-slate-400 sm:text-base">
                     The plays, clutches, and moments worth watching again.
                 </p>
             </div>
 
-            {/* Larger 3D carousel */}
             <div className="relative z-10 mx-auto flex h-[310px] w-full max-w-[1500px] items-center justify-center overflow-hidden sm:h-[420px] md:h-[490px] lg:h-[540px]">
                 {clips.map((clip, index) => {
                     const offset = getOffset(index);
@@ -93,45 +104,40 @@ export default function ClipsSection({ username = "shadow" }) {
                             key={clip.id}
                             type="button"
                             aria-label={`Select ${clip.title}`}
+                            aria-pressed={isActive}
                             onClick={() => setActive(index)}
                             className="clip-card absolute w-[min(76vw,300px)] overflow-hidden rounded-xl border border-sky-300/25 bg-[#09172B]/95 text-left shadow-[0_20px_65px_rgba(0,0,0,0.65)] transition-all duration-700 ease-in-out sm:w-[min(62vw,410px)] md:w-[min(52vw,480px)] lg:w-[min(44vw,520px)]"
                             style={{
-                                transform: `
-                  translateX(${offset * (typeof window !== "undefined" && window.innerWidth < 640 ? 56 : window.innerWidth < 1024 ? 190 : 250)}px)
-                  rotateY(${offset * -12}deg)
-                  scale(${isActive ? 1 : Math.max(0.68, 1 - distance * 0.13)})
-                `,
+                                transform: `translateX(${offset * offsetStep[layout]}px) rotateY(${offset * -12}deg) scale(${isActive ? 1 : Math.max(0.68, 1 - distance * 0.13)})`,
                                 opacity: distance > 2 ? 0 : 1 - distance * 0.2,
                                 zIndex: 20 - distance,
                                 filter: isActive ? "brightness(1)" : "brightness(0.58)",
+                                pointerEvents: distance > 2 ? "none" : "auto",
                             }}
                         >
-                            {/* Thumbnail */}
                             <div className="relative aspect-video overflow-hidden">
                                 <img
                                     src={`https://img.youtube.com/vi/${clip.id}/hqdefault.jpg`}
-                                    alt={clip.title}
-                                    loading="lazy"
+                                    alt={`${clip.name} — ${clip.title}`}
+                                    loading={isActive ? "eager" : "lazy"}
+                                    fetchPriority={isActive ? "high" : "auto"}
+                                    decoding="async"
+                                    width="480"
+                                    height="360"
                                     className="h-full w-full object-cover"
                                 />
-
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#050A13]/90 via-transparent to-blue-950/10" />
-
-
-
-                                {/* Duration */}
-                                <span className="absolute bottom-3 right-3  bg-transparent px-2 py-1 text-[10px] font-bold text-white sm:text-xs">
+                                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050A13]/90 via-transparent to-blue-950/10" />
+                                <span className="absolute bottom-3 right-3 bg-transparent px-2 py-1 text-[10px] font-bold text-white sm:text-xs">
                                     {clip.duration}
                                 </span>
                             </div>
 
-                            {/* Title at bottom */}
                             <div className="border-t border-sky-400/20 px-3 py-3 sm:px-5 sm:py-4">
                                 <p className="truncate text-sm font-bold text-white sm:text-base md:text-lg">
                                     {clip.title}
                                 </p>
                                 <p className="mt-1 text-[9px] uppercase tracking-[0.2em] text-sky-400 sm:text-[10px]">
-                                    Player Highlights
+                                    {clip.name}
                                 </p>
                             </div>
                         </button>
@@ -139,103 +145,87 @@ export default function ClipsSection({ username = "shadow" }) {
                 })}
             </div>
 
-            {/* Carousel indicators */}
             <div className="relative z-10 mt-2 flex justify-center gap-2 sm:mt-4">
                 {clips.map((clip, index) => (
                     <button
                         key={clip.id}
+                        type="button"
                         onClick={() => setActive(index)}
-                        aria-label={`Show clip ${index + 1}`}
-                        className={`h-1.5 rounded-full transition-all duration-300 ${active === index
-                            ? "w-8 bg-sky-400"
-                            : "w-2 bg-slate-600 hover:bg-slate-400"
-                            }`}
+                        aria-label={`Show clip ${index + 1}: ${clip.name}`}
+                        aria-current={active === index ? "true" : undefined}
+                        className={`h-1.5 rounded-full transition-all duration-300 ${
+                            active === index
+                                ? "w-8 bg-sky-400"
+                                : "w-2 bg-slate-600 hover:bg-slate-400"
+                        }`}
                     />
                 ))}
             </div>
 
-            {/* View more */}
             <div className="relative z-10 mt-7 flex justify-center sm:mt-10">
                 <Link
                     to={`/${username}/clips`}
-                    className="group inline-flex items-center gap-3 rounded-lg border border-sky-400/40 bg-blue-500/10 px-5 py-3 text-xs font-semibold text-white transition-all duration-300 hover:border-sky-300 hover:bg-blue-500/20 hover:shadow-[0_0_28px_rgba(56,189,248,0.2)] sm:px-6 sm:text-sm"
+                    className="group inline-flex items-center gap-3 rounded-lg border border-sky-400/40 bg-blue-500/10 px-5 py-3 text-xs font-semibold text-white transition-colors duration-300 hover:border-sky-300 hover:bg-blue-500/20 sm:px-6 sm:text-sm"
                 >
                     View All Clips
-                    <span className="transition-transform duration-300 group-hover:translate-x-1">
-                        →
-                    </span>
+                    <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                 </Link>
             </div>
 
             <style>{`
-        .clips-grid {
-          background-image:
-            linear-gradient(rgba(96,165,250,.04) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(96,165,250,.04) 1px, transparent 1px);
-          background-size: 38px 38px;
-          mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
-        }
+                .clips-grid {
+                    background-image:
+                        linear-gradient(rgba(96,165,250,.04) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(96,165,250,.04) 1px, transparent 1px);
+                    background-size: 38px 38px;
+                    mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+                }
 
-        .japanese-text {
-          position: absolute;
-          white-space: nowrap;
-          font-size: clamp(2.8rem, 7vw, 6.8rem);
-          font-weight: 900;
-          letter-spacing: .12em;
-          writing-mode: vertical-rl;
-          color: transparent;
-          background: linear-gradient(
-            180deg,
-            #e0f2fe 0%,
-            #60a5fa 25%,
-            #0875e1 50%,
-            #102c58 76%,
-            #38bdf8 100%
-          );
-          background-clip: text;
-          -webkit-background-clip: text;
-          -webkit-text-stroke: 1px rgba(96,165,250,.18);
-          filter: drop-shadow(0 0 14px rgba(37,99,235,.3));
-          opacity: .17;
-          animation: jp-float 9s ease-in-out infinite alternate,
-                     jp-shine 5s ease-in-out infinite;
-        }
+                .japanese-text {
+                    position: absolute;
+                    white-space: nowrap;
+                    font-size: clamp(2.8rem, 7vw, 6.8rem);
+                    font-weight: 900;
+                    letter-spacing: .12em;
+                    writing-mode: vertical-rl;
+                    color: transparent;
+                    background: linear-gradient(180deg, #e0f2fe 0%, #60a5fa 25%, #0875e1 50%, #102c58 76%, #38bdf8 100%);
+                    background-clip: text;
+                    -webkit-background-clip: text;
+                    -webkit-text-stroke: 1px rgba(96,165,250,.18);
+                    filter: drop-shadow(0 0 14px rgba(37,99,235,.3));
+                    opacity: .17;
+                    animation: jp-float 9s ease-in-out infinite alternate, jp-shine 5s ease-in-out infinite;
+                }
 
-        .jp-one { top: 4%; left: 3%; }
-        .jp-two { top: 8%; right: 5%; animation-delay: -2s, -1s; }
-        .jp-three { bottom: 5%; left: 15%; animation-delay: -4s, -2s; }
-        .jp-four { top: 30%; right: 20%; animation-delay: -1s, -3s; }
-        .jp-five { bottom: 4%; right: 7%; animation-delay: -3s, -2s; }
-        .jp-six { top: 22%; left: 25%; animation-delay: -5s, -1s; }
-        .jp-seven { bottom: 12%; left: 42%; animation-delay: -2s, -4s; }
+                .jp-one { top: 4%; left: 3%; }
+                .jp-two { top: 8%; right: 5%; animation-delay: -2s, -1s; }
+                .jp-three { bottom: 5%; left: 15%; animation-delay: -4s, -2s; }
+                .jp-four { top: 30%; right: 20%; animation-delay: -1s, -3s; }
+                .jp-five { bottom: 4%; right: 7%; animation-delay: -3s, -2s; }
+                .jp-six { top: 22%; left: 25%; animation-delay: -5s, -1s; }
+                .jp-seven { bottom: 12%; left: 42%; animation-delay: -2s, -4s; }
 
-        @keyframes jp-float {
-          from { transform: translate3d(-8px, -10px, 0) rotate(-3deg); }
-          to { transform: translate3d(12px, 14px, 0) rotate(3deg); }
-        }
+                @keyframes jp-float {
+                    from { transform: translate3d(-8px, -10px, 0) rotate(-3deg); }
+                    to { transform: translate3d(12px, 14px, 0) rotate(3deg); }
+                }
 
-        @keyframes jp-shine {
-          0%, 100% { opacity: .10; }
-          50% {
-            opacity: .24;
-            filter: drop-shadow(0 0 24px rgba(56,189,248,.5));
-          }
-        }
+                @keyframes jp-shine {
+                    0%, 100% { opacity: .10; }
+                    50% { opacity: .24; filter: drop-shadow(0 0 24px rgba(56,189,248,.5)); }
+                }
 
-        @media (max-width: 640px) {
-          .japanese-text {
-            font-size: 2.8rem;
-            opacity: .12;
-          }
-          .jp-three, .jp-five, .jp-six, .jp-seven {
-            display: none;
-          }
-        }
+                @media (max-width: 640px) {
+                    .japanese-text { font-size: 2.8rem; opacity: .12; }
+                    .jp-three, .jp-five, .jp-six, .jp-seven { display: none; }
+                }
 
-        @media (prefers-reduced-motion: reduce) {
-          .japanese-text { animation: none; }
-        }
-      `}</style>
+                @media (prefers-reduced-motion: reduce) {
+                    .japanese-text { animation: none; }
+                    .clip-card { transition-duration: .01ms !important; }
+                }
+            `}</style>
 
             <SectionFade />
         </section>

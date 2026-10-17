@@ -7,7 +7,6 @@ import { ArrowUp } from "lucide-react";
 export default function Footer({
     username = "DL",
     playerName = "DL VEMON",
-    logo,
 }) {
     return (
         <footer className="border-t border-blue-400/15 bg-[#070D18] px-5 py-6">
