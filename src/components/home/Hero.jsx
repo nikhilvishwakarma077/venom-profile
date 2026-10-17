@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import charImg from "../../../public/assets/images/char1.webp";
+import SectionFade from "../SectionFade";
 
 const Hero = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -485,7 +486,7 @@ const Hero = () => {
           {/* Floating player tag */}
           <div className="absolute bottom-[15%] right-0 z-20 border border-white/10 bg-[#0b101a]/90 px-3 py-2 backdrop-blur-md sm:bottom-[18%] sm:right-[2%] sm:px-5 sm:py-3 lg:right-[3%]">
             <div className="flex items-center gap-2">
-              
+
               <span className="text-[8px] font-bold tracking-[.17em] text-white/70 sm:text-[10px]">
                 STATUS
               </span>
@@ -512,6 +513,8 @@ const Hero = () => {
           SEASON 01
         </div>
       </div>
+
+      <SectionFade />
     </section>
   );
 };
