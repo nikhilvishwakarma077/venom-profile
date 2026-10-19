@@ -401,15 +401,12 @@ const Hero = () => {
           />
 
           {/* Floating player tag */}
-          <div className="absolute bottom-[15%] right-0 z-20 border border-white/10 bg-[#0b101a]/90 px-3 py-2 backdrop-blur-md sm:bottom-[18%] sm:right-[2%] sm:px-5 sm:py-3 lg:right-[3%]">
-            <div className="flex items-center gap-2">
+          <div className="absolute bottom-[15%] right-0 z-20 border border-white/10 bg-[#0b101a]/90 px-3 py-2 backdrop-blur-md sm:bottom-[19%] sm:right-[2%] sm:px-5 sm:py-3 lg:right-[3%]">
 
-              <span className="text-[8px] font-bold tracking-[.17em] text-white/70 sm:text-[10px]">
-                STATUS
-              </span>
-            </div>
-            <p className="mt-1 text-xs font-extrabold tracking-wide sm:text-sm">
-              READY TO COMPETE
+            <p
+              title="Frontline Rusher"
+              className="mt-1 text-xs font-extrabold tracking-wide sm:text-sm">
+              突撃の先駆者
             </p>
           </div>
 
@@ -433,6 +430,7 @@ const Hero = () => {
 
       <SectionFade />
     </section>
+    
   );
 };
 

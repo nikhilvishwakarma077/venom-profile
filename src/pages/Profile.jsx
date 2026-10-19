@@ -1,202 +1,1014 @@
-
-import { ArrowUpRight, Trophy, Target, Zap } from "lucide-react";
-import { Link } from "react-router-dom";
-import charImg from "../../public/assets/images/char1.webp";
-import SectionFade from "../components/SectionFade";
+import { useState } from "react";
+import { Trophy, Shield, Users, Video, Clock3 } from "lucide-react";
+import bannerImg from "../../public/assets/images/banner1.png"
+import charImg from "../../public/assets/images/char1.webp"
 
 const Profile = () => {
-    return (
-        <section className="profile-opening relative isolate min-h-screen overflow-hidden bg-[#070D18] px-4 pb-5 pt-20 text-white sm:px-7 sm:pt-24 lg:px-10">
-            <SectionFade />
+  const [showAvatarPreview, setShowAvatarPreview] = useState(false);
+  const [selectedAchievement, setSelectedAchievement] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
-            {/* Background */}
-            <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_50%_45%,rgba(0,132,255,0.16),transparent_55%)]" />
-            <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.07] [background-image:linear-gradient(rgba(95,170,255,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(95,170,255,0.2)_1px,transparent_1px)] [background-size:45px_45px]" />
+  // Static demo data — replace these values with your own assets/content.
+  const userProfile = {
+    username: "DL VENOM",
+    uid: "8975653120",
+    banner: bannerImg,
+    avatar: charImg,
+    availability: { status: "DARK LEGION ESPORTS" },
+    socialLinks: { instagram: "venom.ff", discord: "venom" },
+    role: "Primary Rusher",
+    age: 21,
+    country: "India",
+    languages: ["Hindi","Marathi","English"],
+    bio: "Competitive Free Fire MAX player focused on team coordination, smart rotations, and consistent tournament performance.",
+    stats: { currentRank: "Heroic", kdRatio: "4.25", headshotPercentage: 68 },
+    experience: { level: 72, yearsPlaying: 5, esportsExperience: 3 },
+    teamHistory: [
+      { teamName: "MARATHA TYCOONS", role: "Rusher", duration: "2024 — 2025" },
+      { teamName: "SHADOW ESPORTS", role: "Rusher + IGL", duration: "2023 — 2024" },
+    ],
+    clips: [
+      { title: "FFMAI GRIND BEGINS || TOURNAMENT HIGHLIGHTS", clipUrl: "https://www.youtube.com/watch?v=9DQE2Y2wT1s" },
+      { title: "QUALIFIED FOR THE KNOCKOUT STAGE TOURNAMENT HIGHLIGHTS 💥 BY iQOO TGDELETE🖤🔥", clipUrl: "https://www.youtube.com/watch?v=3pOu1d9TVIE" },
+      { title: "FFMIC Week 1 Highlights by TAG SHOTO | Team Apex Gaming", clipUrl: "https://www.youtube.com/watch?v=Ku_CXca8IqA" },
+    ],
+    achievements: [
+      { title: "FFWS Champions", image: "https://dl.dir.freefiremobile.com/common/web_event/hash/0630756532c4ae833a27eb36c707519bjpg" },
+      { title: "MVP — Weekly Scrims", image: "https://res.cloudinary.com/dycngnseq/image/upload/v1782673462/gamershub/achievements/yfox43zutu3i58dhr6fd.jpg" },
+      { title: "ZM Championship Winners 🏆", image: "http://res.cloudinary.com/dycngnseq/image/upload/v1781731660/gamershub/achievements/zlwovzsb3kxw5gzkxhtu.jpg" },
+    ],
+  };
 
-            <div className="mx-auto max-w-[1450px]">
+  const detectPlatform = (url) => {
+    if (url.includes("youtu.be") || url.includes("youtube.com")) return "youtube";
+    if (url.includes("instagram.com") || url.includes("instagr.am")) return "instagram";
+    return "unknown";
+  };
 
-                {/* HERO: TITLE + CHARACTER + SIDE CONTENT */}
-                <div className="relative grid grid-cols-1 items-end md:min-h-[560px] md:grid-cols-[0.85fr_1.3fr_0.9fr] lg:min-h-[650px] lg:grid-cols-[0.9fr_1.35fr_0.9fr]">
-
-                    {/* Oversized title behind character */}
-                    <h1 className="pointer-events-none absolute left-1/2 top-[-25px] sm:top-[-70px] z-0 -translate-x-1/2 whitespace-nowrap font-['Oswald'] text-[21vw] font-black uppercase leading-[0.90] tracking-[-0.015em] text-[#DCE7F5] sm:text-[19vw]  md:text-[17vw] lg:text-[16vw] xl:text-[15vw]">
-                        DL VENOM
-                    </h1>
-
-                    {/* Mobile character: right below title */}
-                    <div className="relative col-span-1 flex h-[330px] items-end justify-center md:hidden">
-
-                        <div className="absolute bottom-2 h-[230px] w-[230px] rounded-full border border-sky-400/20 bg-sky-500/[0.06] shadow-[0_0_70px_rgba(0,132,255,0.15)]" />
-                        <div className="absolute bottom-5 h-[200px] w-[200px] rounded-full bg-sky-500/10 blur-3xl" />
-
-                        {/* Floating Aura Particles */}
-                        <div className="pointer-events-none absolute inset-0 z-[5] overflow-hidden">
-                            {Array.from({ length: 18 }).map((_, i) => (
-                                <span
-                                    key={i}
-                                    className="aura-particle absolute rounded-full bg-sky-300"
-                                    style={{
-                                        left: `${10 + ((i * 37) % 80)}%`,
-                                        top: `${15 + ((i * 29) % 70)}%`,
-                                        width: `${3 + (i % 3)}px`,
-                                        height: `${3 + (i % 3)}px`,
-                                        animationDelay: `${(i % 8) * -0.7}s`,
-                                        animationDuration: `${3.5 + (i % 4) * 0.5}s`,
-                                        "--drift": `${(i % 2 === 0 ? 1 : -1) * (15 + (i % 4) * 10)}px`,
-                                    }}
-                                />
-                            ))}
-                        </div>
-
-
-
-                        <img
-                            src={charImg}
-                            alt="DL Venom esports character"
-                            className="relative z-10 h-[330px] max-w-full object-contain object-bottom drop-shadow-[0_0_25px_rgba(0,132,255,0.2)]"
-                        />
-                    </div>
-
-                    {/* LEFT PANEL */}
-                    <div className="relative z-20 order-2 mt-2 pb-5 md:order-1 md:mt-0 md:pb-10 lg:pb-12">
-                        <p className="mb-4 font-['Oswald'] text-3xl font-bold uppercase leading-[1.05] text-sky-400 sm:text-4xl">
-                            Primary
-                            <br />
-                            Rusher
-                        </p>
-
-                        <div className="space-y-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 sm:text-xs sm:tracking-[0.2em]">
-                            <p>Entry Fragger</p>
-                            <p>Aggressive Playstyle</p>
-                            <p>Close-Range Specialist</p>
-                        </div>
-
-                        <div className="my-5 h-px w-10 bg-sky-400" />
-
-                        <div className="flex gap-2">
-                            <span className="font-['Oswald'] text-4xl leading-none text-sky-400">
-                                “
-                            </span>
-                            <p className="max-w-[250px] text-xs font-medium uppercase leading-[1.7] tracking-wide text-slate-300 sm:text-sm">
-                                I break the front line, create space, and turn every push into
-                                an opportunity.
-                            </p>
-                        </div>
-
-                        <div className="mt-5 flex items-center gap-2">
-                            <div className="h-px w-8 bg-sky-400/70" />
-                            <span className="text-[9px] uppercase tracking-[0.18em] text-slate-500">
-                                Fearless by nature
-                            </span>
-                        </div>
-                    </div>
-
-                    {/* DESKTOP CENTER CHARACTER */}
-                    <div className="relative z-10 hidden h-full min-h-[560px] items-end justify-center md:order-2 md:flex lg:min-h-[650px]">
-                        <div className="absolute bottom-[5%] left-1/2 h-[280px] w-[280px] -translate-x-1/2 rounded-full border border-sky-400/20 bg-sky-500/[0.06] shadow-[0_0_90px_rgba(0,132,255,0.15)] lg:h-[360px] lg:w-[360px]" />
-                        <div className="absolute bottom-[9%] left-1/2 h-[270px] w-[270px] -translate-x-1/2 rounded-full bg-sky-500/10 blur-3xl lg:h-[330px] lg:w-[330px]" />
-
-                        {/* Floating Aura Particles */}
-                        <div className="pointer-events-none absolute inset-0 z-[5] overflow-hidden">
-                            {Array.from({ length: 18 }).map((_, i) => (
-                                <span
-                                    key={i}
-                                    className="aura-particle absolute rounded-full bg-sky-300"
-                                    style={{
-                                        left: `${10 + ((i * 37) % 80)}%`,
-                                        top: `${15 + ((i * 29) % 70)}%`,
-                                        width: `${4 + (i % 3)}px`,
-                                        height: `${4 + (i % 3)}px`,
-                                        animationDelay: `${(i % 8) * -0.7}s`,
-                                        animationDuration: `${3.5 + (i % 4) * 0.5}s`,
-                                        "--drift": `${(i % 2 === 0 ? 1 : -1) * (15 + (i % 4) * 10)}px`,
-                                    }}
-                                />
-                            ))}
-                        </div>
-
-                        <img
-                            src={charImg}
-                            alt="DL Venom esports character"
-                            className="relative z-10 h-[510px] max-w-[125%] object-contain object-bottom drop-shadow-[0_0_30px_rgba(0,132,255,0.2)] lg:h-[620px] xl:h-[660px]"
-                        />
-
-                        <span className="absolute bottom-[24%] left-1 z-20 hidden font-['Oswald'] text-[9px] uppercase tracking-[0.25em] text-sky-400/60 [writing-mode:vertical-rl] lg:block">
-                            No retreat / No surrender
-                        </span>
-                    </div>
-
-                    {/* RIGHT PANEL */}
-                    <div className="relative z-20 order-3 mt-2 pb-5 md:mt-0 md:pb-10 lg:pb-12">
-
-
-                        <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.25em] text-sky-400">
-                            Esports Athlete
-                        </p>
-
-                        <h2 className="font-['Oswald'] text-4xl font-black uppercase leading-[0.92] tracking-tight sm:text-5xl lg:text-5xl">
-                            DL
-                            <br />
-                            VENOM
-                        </h2>
-
-                        <p className="mt-2 break-words text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400 sm:text-xs">
-                            DARK LEGION ESPORTS
-                        </p>
-
-                        <p className="mt-4 max-w-sm text-xs leading-[1.8] text-slate-400 sm:text-sm">
-                            An aggressive entry fragger built for fast decisions, fearless
-                            engagements, and opening space for the squad.
-                        </p>
-
-                        <div className="my-5 h-px w-full bg-gradient-to-r from-sky-400/50 to-transparent" />
-
-                        {/* Stats */}
-                        <div className="grid grid-cols-3 gap-2 sm:gap-3">
-                            <div className="min-w-0">
-                                <Target size={17} className="mb-2 text-sky-400" />
-                                <p className="font-['Oswald'] text-2xl font-bold sm:text-3xl">03+</p>
-                                <p className="mt-1 text-[8px] uppercase leading-3 tracking-wide text-slate-500 sm:text-[9px]">
-                                    Esports Exp.
-                                </p>
-                            </div>
-
-                            <div className="min-w-0">
-                                <Trophy size={17} className="mb-2 text-sky-400" />
-                                <p className="font-['Oswald'] text-2xl font-bold sm:text-3xl">25+</p>
-                                <p className="mt-1 text-[8px] uppercase leading-3 tracking-wide text-slate-500 sm:text-[9px]">
-                                    Tournaments
-                                </p>
-                            </div>
-
-                            <div className="min-w-0">
-                                <Zap size={17} className="mb-2 text-sky-400" />
-                                <p className="font-['Oswald'] text-xl font-bold sm:text-2xl">RUSH</p>
-                                <p className="mt-1 text-[8px] uppercase leading-3 tracking-wide text-slate-500 sm:text-[9px]">
-                                    Playstyle
-                                </p>
-                            </div>
-                        </div>
-
-                        <Link
-                            to="/players/venom/clips"
-                            className="mt-5 inline-flex items-center gap-2 border border-sky-400/40 px-3 py-2.5 text-[9px] font-bold uppercase tracking-[0.12em] transition duration-300 hover:bg-sky-400 hover:text-[#070D18] sm:px-4 sm:text-[10px]"
-                        >
-                            Explore Highlights
-                            <ArrowUpRight size={15} />
-                        </Link>
-                    </div>
-                </div>
-
-                {/* Bottom strip */}
-                <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-sky-400/15 pt-3 text-[8px] uppercase tracking-[0.15em] text-slate-600 sm:text-[9px] sm:tracking-[0.2em]">
-                    <span>DL VENOM // Free Fire MAX</span>
-                    <span className="hidden sm:block">Precision · Aggression · Impact</span>
-                    <span>Player 001</span>
-                </div>
-            </div>
-        </section>
+  const getYouTubeThumbnail = (url) => {
+    const match = url.match(
+      /(?:youtu\.be\/|youtube\.com.*(?:v=|\/shorts\/|\/embed\/))([^&?/]+)/
     );
-};
 
-export default Profile;
+    const videoId = match?.[1];
+    if (!videoId) return "/images/default-clip.jpg";
+
+    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+  };
+
+  const getInstagramThumbnail = () => {
+    return "https://images.macrumors.com/t/jkfoi-AlDh8DC2jET480Y5aS0ow=/1600x0/article-new/2021/03/Instagram-Feature-2.jpg";
+  };
+
+  const getClipThumbnail = (url) => {
+    const platform = detectPlatform(url);
+
+    switch (platform) {
+      case "youtube":
+        return getYouTubeThumbnail(url);
+
+      case "instagram":
+        return getInstagramThumbnail();
+
+      default:
+        return "/thumbnails/thumbnail1.webp";
+    }
+  };
+
+  const isYoutubeUrl = (url) => {
+    return (
+      url.includes("youtube.com") ||
+      url.includes("youtu.be")
+    );
+  };
+
+  const getYoutubeEmbedUrl = (url) => {
+
+    const match = url.match(
+      /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([^?&/]+)/
+    );
+
+    return match
+      ? `https://www.youtube.com/embed/${match[1]}`
+      : "";
+  };
+
+  return (
+    <div className="min-h-screen bg-[#070D18] py-2 text-white">
+
+      {/* BANNER */}
+      <div className=" relative w-full overflow-hidden  aspect-4/1 max-h-80 min-h-35">
+        <img
+          src={`${userProfile.banner}`}
+          alt="banner"
+          className="absolute inset-0 h-full w-full object-cover object-center"
+        />
+      </div>
+
+
+      <div className="mx-auto max-w-7xl px-4 pb-10">
+
+        {/* PROFILE CARD */}
+        <div className="mt-4 border border-zinc-800 bg-[#0B1424] p-5 sm:p-6 lg:p-8">
+
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-center">
+
+            {/* AVATAR */}
+            <div className="flex justify-center lg:justify-start">
+
+              <div
+                className="relative cursor-pointer group"
+                onClick={() => setShowAvatarPreview(true)}
+              >
+
+                <div className="absolute inset-0 bg-sky-500/20 blur-3xl" />
+
+                <img
+                  src={`${userProfile.avatar}`}
+                  alt="avatar"
+                  onError={(e) => {
+                    e.currentTarget.src =
+                      "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+                  }}
+                  className="relative rounded-full h-28 w-28 sm:h-36 sm:w-36 lg:h-60 lg:w-60 border-2 border-sky-500/40 object-cover transition-all duration-300 group-hover:scale-105"
+                />
+
+                {/* View Overlay */}
+                <div
+                  className="absolute inset-0 scale-105  flex items-center justify-center rounded-full bg-black/50 opacity-0 transition-all duration-300 group-hover:opacity-100"
+                >
+                  <span className="text-xs font-semibold tracking-wider text-white">
+                    VIEW
+                  </span>
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* CONTENT */}
+            <div className="flex-1">
+
+              {/* DESKTOP TOP ROW */}
+              <div className="hidden lg:flex items-start justify-between gap-6">
+
+                {/* LEFT */}
+                <div>
+
+                  <h1 className="text-4xl font-black tracking-wide text-white">
+                    {userProfile?.username}
+                  </h1>
+
+                  <p className="mt-1 text-sm text-zinc-500">
+                    UID #{userProfile?.uid}
+                  </p>
+
+                </div>
+
+                {/* RIGHT */}
+                <div className="flex flex-col items-end gap-4">
+
+                  <div
+                    className={` border px-5 py-3 font-medium capitalize 
+    ${userProfile.availability.status === "open for scrims"
+                        ? "border-orange-400 bg-orange-400/10 text-orange-300"
+
+                        : userProfile.availability.status === "looking for team"
+                          ? "border-green-400 bg-green-400/10 text-green-300"
+
+                          : userProfile.availability.status === "already in team"
+                            ? "border-sky-400 bg-sky-400/10 text-sky-300"
+
+                            : "border-sky-400/30 bg-sky-400/10 text-sky-300"
+                      }
+  `}
+                  >
+                    {userProfile?.availability.status}
+                  </div>
+
+                  <div className="flex gap-3">
+
+                    {userProfile?.socialLinks.instagram && (
+                      <a
+                        href={`https://instagram.com/${userProfile?.socialLinks.instagram}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex h-11 w-11 items-center justify-center border border-zinc-700 bg-[#080F1C] transition-all duration-300 hover:border-sky-500/40 hover:bg-sky-500/10"
+                      >
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
+                          alt="instagram"
+                          className="h-5 w-5"
+                        />
+                      </a>
+                    )}
+
+                    {userProfile?.socialLinks.discord && (
+                      <a
+                        href={`https://discord.com/${userProfile?.socialLinks.discord}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex h-11 w-11 items-center justify-center border border-zinc-700  bg-[#080F1C] transition-all duration-300 hover:border-sky-500/40 hover:bg-sky-500/10"
+                      >
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png"
+                          alt="discord"
+                          className="h-5 w-5"
+                        />
+                      </a>
+                    )}
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              {/* MOBILE HEADER */}
+              <div className="lg:hidden  text-center">
+
+                <h1 className="text-3xl font-black tracking-wide text-white">
+                  {userProfile?.username}
+                </h1>
+
+                <p className="mt-1 text-sm text-zinc-500">
+                  UID #{userProfile?.uid}
+                </p>
+
+              </div>
+
+              <div className="flex justify-center lg:justify-start">
+
+                <div className="flex items-center border border-sky-500/30 bg-[#080F1C]">
+
+                  <div className="bg-sky-500 px-3 py-3 text-xs font-black text-black">
+                    ROLE
+                  </div>
+
+                  <div className="px-4 py-3 text-sm font-bold uppercase tracking-wider text-white">
+                    {userProfile?.role}
+                  </div>
+
+                </div>
+
+              </div>
+
+              {/* TAGS */}
+              <div className="mt-5 flex flex-wrap justify-center gap-3 lg:justify-start">
+
+                <div className="border border-zinc-700 bg-[#080F1C] px-4 py-2 text-sm text-zinc-300">
+                  Age -  {userProfile?.age}
+                </div>
+
+                <div className="border border-zinc-700 bg-[#080F1C] px-4 py-2 text-sm text-zinc-300">
+                  {userProfile?.country}
+                </div>
+
+
+                <div className="flex flex-wrap gap-2">
+                  {userProfile?.languages?.map((language, index) => (
+                    <div
+                      key={index}
+                      className="border border-sky-500/20 bg-sky-500/10 px-3 py-2 text-sm text-sky-300"
+                    >
+                      {language}
+                    </div>
+                  ))}
+
+                </div>
+
+              </div>
+
+              {/* BIO */}
+              <div className="mt-5">
+
+                <p
+                  className=" text-center text-sm leading-relaxed text-zinc-300 lg:text-left"
+                >
+                  {userProfile?.bio}
+                </p>
+
+              </div>
+
+              {/* MOBILE ONLY STATUS + SOCIALS */}
+              <div className="mt-6 lg:hidden">
+
+                <div
+                  className=" border border-sky-500/40   bg-sky-500/10 px-4 py-3 text-center  text-xs font-semibold uppercase tracking-[0.2em] text-sky-300 "
+                >
+                  {userProfile?.availability.status}
+                </div>
+
+                <div className="mt-4 flex justify-center gap-3">
+
+                  {userProfile?.socialLinks.instagram && (
+                    <a
+                      href={`https://instagram.com/${userProfile?.socialLinks.instagram}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-12 w-12 items-center justify-center border border-zinc-700 bg-[#080F1C]"
+                    >
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png"
+                        alt="instagram"
+                        className="h-6 w-6"
+                      />
+                    </a>
+                  )}
+
+                  {userProfile?.socialLinks.discord && (
+                    <a
+                      href={`https://discord.com/${userProfile?.socialLinks.discord}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-12 w-12 items-center justify-center border border-zinc-700   bg-[#080F1C]"
+                    >
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png"
+                        alt="discord"
+                        className="h-6 w-6"
+                      />
+                    </a>
+                  )}
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* 3 CARDS GRID */}
+        <div className="mt-6 grid gap-6 lg:grid-cols-3">
+
+          {/* STATS */}
+          <div className="border border-zinc-800 bg-[#0B1424]">
+
+            <div className="h-1 bg-linear-to-r from-transparent via-sky-400 to-transparent" />
+
+            <div className="p-5">
+
+              <div className="mb-4 flex items-center gap-2">
+
+                <Shield
+                  className="text-sky-400"
+                  size={16}
+                />
+
+                <h2 className="text-lg font-semibold text-white">
+                  Player Stats
+                </h2>
+
+              </div>
+
+              {userProfile?.stats?.currentRank ||
+                userProfile?.stats?.kdRatio ||
+                userProfile?.stats?.headshotPercentage ? (
+
+                <div className="space-y-3">
+
+                  <div className="border border-zinc-800 bg-[#080F1C] p-4">
+
+                    <p className="text-xs uppercase tracking-wider text-zinc-500">
+                      BR Rank
+                    </p>
+
+                    <h3 className="mt-1 text-xl font-bold text-sky-400">
+                      {userProfile?.stats?.currentRank || "N/A"}
+                    </h3>
+
+                  </div>
+
+                  <div className="border border-zinc-800 bg-[#080F1C] p-4">
+
+                    <p className="text-xs uppercase tracking-wider text-zinc-500">
+                      KD Ratio
+                    </p>
+
+                    <h3 className="mt-1 text-lg font-semibold text-white">
+                      {userProfile?.stats?.kdRatio || "N/A"}
+                    </h3>
+
+                  </div>
+
+                  <div className="border border-zinc-800 bg-[#080F1C] p-4">
+
+                    <p className="text-xs uppercase tracking-wider text-zinc-500">
+                      Headshot %
+                    </p>
+
+                    <h3 className="mt-1 text-lg font-semibold text-white">
+                      {userProfile?.stats?.headshotPercentage
+                        ? `${userProfile.stats.headshotPercentage}%`
+                        : "N/A"}
+                    </h3>
+
+                  </div>
+
+                </div>
+
+              ) : (
+
+                <div className="flex h-52 flex-col items-center justify-center border border-dashed border-zinc-700 bg-[#080F1C] text-center">
+
+                  <Shield
+                    size={36}
+                    className="mb-3 text-zinc-600"
+                  />
+
+                  <h3 className="text-base font-semibold text-zinc-300">
+                    No Stats Available
+                  </h3>
+
+                  <p className="mt-1 text-sm text-zinc-500">
+                    Player has not added stats yet.
+                  </p>
+
+                </div>
+
+              )}
+
+            </div>
+
+          </div>
+
+          {/* EXPERIENCE */}
+          <div className="border border-zinc-800 bg-[#0B1424]">
+
+            <div className="h-1 bg-linear-to-r from-transparent via-sky-400 to-transparent" />
+
+            <div className="p-5">
+
+              <div className="mb-4 flex items-center gap-2">
+
+                <Shield
+                  className="text-sky-400"
+                  size={16}
+                />
+
+                <h2 className="text-lg font-semibold text-white">
+                  Experience
+                </h2>
+
+              </div>
+
+              <div className="space-y-3">
+
+                <div className="border border-zinc-800 bg-[#080F1C] p-4">
+
+                  <p className="text-xs uppercase tracking-wider text-zinc-500">
+                    ID Level
+                  </p>
+
+                  <h3 className="mt-1 text-xl font-bold text-sky-400">
+                    Lv. {userProfile?.experience?.level}
+                  </h3>
+
+                </div>
+
+                <div className="border border-zinc-800 bg-[#080F1C] p-4">
+
+                  <p className="text-xs uppercase tracking-wider text-zinc-500">
+                    Years Playing
+                  </p>
+
+                  <h3 className="mt-1 text-lg font-semibold text-white">
+                    {userProfile?.experience?.yearsPlaying} Years
+                  </h3>
+
+                </div>
+
+                <div className="border border-zinc-800 bg-[#080F1C] p-4">
+
+                  <p className="text-xs uppercase tracking-wider text-zinc-500">
+                    Esports Experience
+                  </p>
+
+                  <h3 className="mt-1 text-lg font-semibold text-white">
+                    {userProfile?.experience?.esportsExperience} Years
+                  </h3>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* PREVIOUS TEAM */}
+          <div className="border border-zinc-800 bg-[#0B1424]">
+
+            <div className="h-1 bg-linear-to-r from-transparent via-sky-400 to-transparent" />
+
+            <div className="p-5">
+
+              <div className="mb-4 flex items-center gap-2">
+
+                <Users
+                  className="text-sky-400"
+                  size={16}
+                />
+
+                <h2 className="text-lg font-semibold text-white">
+                  Previous Teams
+                </h2>
+
+              </div>
+
+              {userProfile?.teamHistory?.[0]?.teamName == "" ||
+                userProfile?.teamHistory?.[0]?.teamName == undefined ? (
+
+                <div className="flex h-52 flex-col items-center justify-center border border-dashed border-zinc-700 bg-[#080F1C] text-center">
+
+                  <Users
+                    size={36}
+                    className="mb-3 text-zinc-600"
+                  />
+
+                  <h3 className="text-base font-semibold text-zinc-300">
+                    No Team History
+                  </h3>
+
+                  <p className="mt-1 text-sm text-zinc-500">
+                    Player has not added any previous teams.
+                  </p>
+
+                </div>
+
+              ) : (
+
+                <div className="max-h-105 space-y-3 overflow-y-auto pr-1">
+
+                  {userProfile.teamHistory.map((team, index) => (
+
+                    <div
+                      key={index}
+                      className="border border-zinc-800 bg-[#080F1C] p-4 transition-all duration-300 hover:border-sky-500/30"
+                    >
+
+                      <h3 className="wrap-break-word text-sm font-semibold text-white">
+                        {team.teamName}
+                      </h3>
+
+                      <p className="mt-1 text-sm text-sky-300">
+                        {team.role}
+                      </p>
+
+                      <div className="mt-3 flex items-center gap-2 text-xs text-zinc-500">
+
+                        <Clock3 size={13} />
+
+                        <span>{team.duration}</span>
+
+                      </div>
+
+                    </div>
+
+                  ))}
+
+                </div>
+
+              )}
+
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* CLIPS */}
+        <div className="mt-8 border border-zinc-800 bg-[#0B1424]">
+
+          <div className="h-1 bg-linear-to-r from-transparent via-sky-400 to-transparent" />
+
+          <div className="p-4 sm:p-5">
+
+            <div className="mb-5 flex items-center gap-2">
+
+              <Video
+                className="text-sky-400"
+                size={18}
+              />
+
+              <h2 className="text-lg font-semibold text-white">
+                Featured Clips
+              </h2>
+
+            </div>
+
+            {userProfile?.clips?.[0]?.title == "" ||
+              userProfile?.clips?.[0]?.title == undefined ? (
+
+              <div className="flex h-52 flex-col items-center justify-center border border-dashed border-zinc-700 bg-[#080F1C] text-center">
+
+                <Video
+                  size={36}
+                  className="mb-3 text-zinc-600"
+                />
+
+                <h3 className="text-base font-semibold text-zinc-300">
+                  No Clips Added
+                </h3>
+
+                <p className="mt-1 text-sm text-zinc-500">
+                  Player has not uploaded any clips yet.
+                </p>
+
+              </div>
+
+            ) : (
+
+              <>
+                {/* MOBILE SCROLL */}
+                <div className="flex gap-4 overflow-x-auto pb-2 md:hidden">
+
+                  {userProfile.clips.map((clip, index) => (
+
+                    <div
+                      key={index}
+                      className="min-w-70 max-w-70 shrink-0 border border-zinc-800 bg-[#080F1C]"
+                    >
+
+                      <div
+                        onClick={() => {
+
+                          if (isYoutubeUrl(clip.clipUrl)) {
+                            setSelectedVideo(
+                              getYoutubeEmbedUrl(clip.clipUrl)
+                            );
+                          } else {
+                            window.open(
+                              clip.clipUrl,
+                              "_blank"
+                            );
+                          }
+
+                        }}
+                        className="group cursor-pointer overflow-hidden"
+                      >
+
+                        <img
+                          src={getClipThumbnail(clip.clipUrl)}
+                          alt={clip.title}
+                          className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+
+                          onError={(e) => {
+                            e.currentTarget.src =
+                              "/thumbnails/thumbnail1.webp";
+                          }}
+                        />
+
+                      </div>
+
+                      <div className="border-t border-zinc-800 p-3">
+
+                        <h3 className="line-clamp-2 text-sm font-medium text-white">
+                          {clip.title}
+                        </h3>
+
+                      </div>
+
+                    </div>
+
+                  ))}
+
+                </div>
+
+                {/* DESKTOP GRID */}
+                <div className="hidden gap-5 md:grid md:grid-cols-2 lg:grid-cols-3">
+
+                  {userProfile.clips.map((clip, index) => (
+
+                    <div
+                      key={index}
+                      className="border border-zinc-800 bg-[#080F1C] transition-all duration-300 hover:border-sky-500/30"
+                    >
+                      <div
+                        onClick={() => {
+
+                          if (isYoutubeUrl(clip.clipUrl)) {
+                            setSelectedVideo(
+                              getYoutubeEmbedUrl(clip.clipUrl)
+                            );
+                          } else {
+                            window.open(
+                              clip.clipUrl,
+                              "_blank"
+                            );
+                          }
+
+                        }}
+                        className="group cursor-pointer overflow-hidden"
+                      >
+
+                        <img
+                          src={getClipThumbnail(clip.clipUrl)}
+                          alt={clip.title}
+                          className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+
+                          onError={(e) => {
+                            e.currentTarget.src =
+                              "/thumbnails/thumbnail1.webp";
+                          }}
+                        />
+
+                      </div>
+
+                      <div className="border-t border-zinc-800 p-3">
+
+                        <h3 className="line-clamp-2 text-sm font-medium text-white">
+                          {clip.title}
+                        </h3>
+
+                      </div>
+
+                    </div>
+
+                  ))}
+
+                </div>
+              </>
+
+            )}
+
+          </div>
+
+        </div>
+
+        {/* ACHIEVEMENTS */}
+        <div className="mt-8 border border-zinc-800 bg-[#0B1424]">
+
+          <div className="h-1 bg-linear-to-r from-transparent via-sky-400 to-transparent" />
+
+          <div className="p-4 sm:p-5">
+
+            <div className="mb-5 flex items-center gap-2">
+
+              <Trophy
+                className="text-sky-400"
+                size={18}
+              />
+
+              <h2 className="text-lg font-semibold text-white">
+                Achievements
+              </h2>
+
+            </div>
+
+            {userProfile?.achievements?.[0]?.title == "" ||
+              userProfile?.achievements?.[0]?.title == undefined ? (
+
+              <div className="flex h-52 flex-col items-center justify-center border border-dashed border-zinc-700 bg-[#080F1C] text-center">
+
+                <Trophy
+                  size={36}
+                  className="mb-3 text-zinc-600"
+                />
+
+                <h3 className="text-base font-semibold text-zinc-300">
+                  No Achievements Yet
+                </h3>
+
+                <p className="mt-1 text-sm text-zinc-500">
+                  You have not added any achievements.
+                </p>
+
+              </div>
+
+            ) : (
+
+              <>
+                {/* MOBILE SCROLL */}
+                <div className="flex gap-4 overflow-x-auto pb-2 md:hidden">
+
+                  {userProfile?.achievements.map((ach, index) => (
+
+                    <div
+                      key={index}
+                      className="min-w-70 max-w-70 shrink-0 border border-zinc-800 bg-[#080F1C]"
+                    >
+                      <div
+                        onClick={() =>
+                          setSelectedAchievement({
+                            image: ach.image,
+                            title: ach.title,
+                          })
+                        }
+                        className="group cursor-pointer overflow-hidden"
+                      >
+                        <img
+                          src={ach.image}
+                          alt={ach.title}
+                          className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      </div>
+
+                      <div className="flex items-center justify-between border-t border-zinc-800 p-3">
+
+                        <h3 className="line-clamp-2 text-sm font-medium text-white">
+                          {ach.title}
+                        </h3>
+
+                        <button
+                          onClick={() =>
+                            setSelectedAchievement({
+                              image: ach.image,
+                              title: ach.title,
+                            })
+                          }
+                          className="border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-xs font-semibold text-sky-300"
+                        >
+                          View
+                        </button>
+
+                      </div>
+
+                    </div>
+
+                  ))}
+
+                </div>
+
+                {/* DESKTOP GRID */}
+                <div className="hidden gap-5 md:grid md:grid-cols-2 lg:grid-cols-3">
+
+                  {userProfile?.achievements.map((ach, index) => (
+
+                    <div
+                      key={index}
+                      className=" border border-zinc-800 bg-[#080F1C] transition-all duration-300 hover:border-sky-500/30"
+                    >
+                      <div
+                        onClick={() =>
+                          setSelectedAchievement({
+                            image: ach.image,
+                            title: ach.title,
+                          })
+                        }
+                        className="group block cursor-pointer overflow-hidden"
+                      >
+
+                        <img
+                          src={ach.image}
+                          alt={ach.title}
+                          className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+
+                      </div>
+
+                      <div className="flex items-center justify-between border-t border-zinc-800 p-3">
+
+                        <h3 className="line-clamp-2 text-sm font-medium text-white">
+                          {ach.title}
+                        </h3>
+
+                        <button
+                          onClick={() =>
+                            setSelectedAchievement({
+                              image: ach.image,
+                              title: ach.title,
+                            })
+                          }
+                          className="border border-sky-500/30   bg-sky-500/10 px-3 py-1 text-xs font-semibold text-sky-300 transition-all duration-300 hover:bg-sky-500 hover:text-black"
+                        >
+                          View
+                        </button>
+
+                      </div>
+
+                    </div>
+
+                  ))}
+
+                </div>
+              </>
+
+            )}
+
+          </div>
+
+        </div>
+        {/* ACHIEVEMENTS PREVIEW */}
+        {selectedAchievement && (
+          <div
+            className="fixed inset-0 z-9999 flex items-center justify-center bg-black/90
+                        p-4"
+            onClick={() => setSelectedAchievement(null)}
+          >
+            <div
+              className="relative w-full max-w-5xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close */}
+              <button
+                onClick={() => setSelectedAchievement(null)}
+                className="absolute -right-1 -top-12 z-20 text-3xl font-bold text-white cursor-pointer"
+              >
+                ×
+              </button>
+
+              {/* Image */}
+              <img
+                src={selectedAchievement.image}
+                alt={selectedAchievement.title}
+                className="max-h-[80vh] w-full object-contain border border-sky-500/30 bg-[#080F1C]"
+              />
+
+              {/* Title */}
+              <div
+                className="border border-t-0 border-sky-500/30 bg-[#080F1C] p-4"
+              >
+                <h3 className="text-center text-lg font-semibold text-white">
+                  {selectedAchievement.title}
+                </h3>
+              </div>
+            </div>
+          </div>
+        )}
+
+      </div>
+
+      {/* AVATAR PREVIEW */}
+      {showAvatarPreview && (
+
+        <div
+          className="fixed inset-0 z-999 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+          onClick={() => setShowAvatarPreview(false)}
+        >
+
+          {/* Close Button */}
+          <button
+            onClick={() => setShowAvatarPreview(false)}
+            className=" absolute right-5 top-5 text-3xl font-light text-white cursor-pointer"
+          >
+            ×
+          </button>
+
+          {/* Image */}
+          <img
+            src={`${userProfile.avatar}`}
+            alt="avatar-preview"
+            onClick={(e) => e.stopPropagation()}
+            onError={(e) => {
+              e.currentTarget.src =
+                "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+            }}
+            className=" max-h-[90vh] max-w-[90vw] object-contain border border-sky-500/30 shadow-[0_0_50px_rgba(56,189,248,0.25)]"
+          />
+
+        </div>
+
+      )}
+
+      {/* YT VIDEO PREVIEW */}
+      {selectedVideo && (
+
+        <div
+          className=" fixed inset-0 z-9999 flex items-center justify-center bg-black/90 p-4"
+          onClick={() => setSelectedVideo(null)}
+        >
+          <div
+            className=" relative w-full max-w-5xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+
+            <button
+              onClick={() =>
+                setSelectedVideo(null)
+              }
+              className="absolute -top-12 right-0 text-4xl text-white cursor-pointer"
+            >
+              ×
+            </button>
+
+            <div className="aspect-video w-full border border-sky-500/30 bg-black">
+
+              <iframe
+                src={selectedVideo}
+                className="h-full w-full"
+                allow="accelerometer;
+                        autoplay;
+                        clipboard-write;
+                        encrypted-media;
+                        gyroscope;
+                        picture-in-picture;
+                        web-share"
+                allowFullScreen
+              />
+
+            </div>
+
+          </div>
+
+        </div>
+
+      )}
+    </div>
+  )
+}
+
+export default Profile
