@@ -6,7 +6,7 @@ const clips = [
     { id: "9DQE2Y2wT1s", title: "FFMAI GRIND BEGINS || TOURNAMENT HIGHLIGHTS", duration: "8:04", name: "PAHADI GAMER" },
     { id: "NG4-8Fey0Hc", title: "MVP Of Knockout Stage Day 1 🐅 || Qualified For FFMIC LAN 🦧 💙", duration: "7:03", name: "TE CROPSE" },
     { id: "Ku_CXca8IqA", title: "FFMIC Week 1 Highlights by TAG SHOTO | Team Apex Gaming", duration: "12:52", name: "SHOTO FF" },
-    { id: "zERCe0gUqGw", title: "FFMIC TOP 6 | RAW TOURNAMENT POV | FT. IQOO TG MAFIA", duration: "7:34", name: "MAFIA" },
+    { id: "zERCe0gUqGw", title: "FFMIC RAW TOURNAMENT POV ", duration: "7:34", name: "KD FF" },
     { id: "3pOu1d9TVIE", title: "QUALIFIED FOR THE KNOCKOUT STAGE TOURNAMENT HIGHLIGHTS 💥 BY iQOO TGDELETE🖤🔥", duration: "8:35", name: "TG DELETE" },
 ];
 
