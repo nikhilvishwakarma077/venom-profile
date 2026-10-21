@@ -153,18 +153,17 @@ export default function ClipsSection({ username = "shadow" }) {
                         onClick={() => setActive(index)}
                         aria-label={`Show clip ${index + 1}: ${clip.name}`}
                         aria-current={active === index ? "true" : undefined}
-                        className={`h-1.5 rounded-full transition-all duration-300 ${
-                            active === index
+                        className={`h-1.5 rounded-full transition-all duration-300 ${active === index
                                 ? "w-8 bg-sky-400"
                                 : "w-2 bg-slate-600 hover:bg-slate-400"
-                        }`}
+                            }`}
                     />
                 ))}
             </div>
 
             <div className="relative z-10 mt-7 flex justify-center sm:mt-10">
                 <Link
-                    to={`/${username}/clips`}
+                    to={`/clips`}
                     className="group inline-flex items-center gap-3 rounded-lg border border-sky-400/40 bg-blue-500/10 px-5 py-3 text-xs font-semibold text-white transition-colors duration-300 hover:border-sky-300 hover:bg-blue-500/20 sm:px-6 sm:text-sm"
                 >
                     View All Clips

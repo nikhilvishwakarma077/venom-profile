@@ -1,0 +1,153 @@
+
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+
+const HomeIntro = () => {
+  const { pathname } = useLocation();
+  const [visible, setVisible] = useState(pathname === "/");
+
+  useEffect(() => {
+    if (pathname !== "/") {
+      setVisible(false);
+      return;
+    }
+
+    setVisible(true);
+
+    const timer = setTimeout(() => {
+      setVisible(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, [pathname]);
+
+  if (!visible || pathname !== "/") return null;
+
+  return (
+    <div className="home-intro" aria-hidden="true">
+      <div className="home-intro-line" />
+
+      <div className="home-intro-content">
+        <span className="home-intro-label">
+          INITIALIZING PLAYER PROFILE
+        </span>
+
+        <span className="home-intro-code">
+          FF.MAX // SYSTEM READY
+        </span>
+      </div>
+
+      <style>{`
+        .home-intro {
+          position: fixed;
+          inset: 0;
+          z-index: 999999;
+          isolation: isolate;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #080b12;
+          pointer-events: all;
+          animation: homeIntroExit 0.5s ease 1s forwards;
+        }
+
+        .home-intro-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+          padding: 20px;
+          text-align: center;
+        }
+
+        .home-intro-line {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 3px;
+          background: #1683ff;
+          box-shadow:
+            0 0 25px #1683ff,
+            0 0 70px #0066ff;
+          animation: homeEnergyScan 1s ease-in-out forwards;
+        }
+
+        .home-intro-label,
+        .home-intro-code {
+          font-family: 'Oswald', sans-serif;
+          letter-spacing: 0.25em;
+          white-space: nowrap;
+        }
+
+        .home-intro-label {
+          color: #fff;
+          font-size: 11px;
+          animation: homeLabelReveal 0.5s ease both;
+        }
+
+        .home-intro-code {
+          color: #1683ff;
+          font-size: 9px;
+          animation: homeLabelReveal 0.5s ease 0.2s both;
+        }
+
+        @keyframes homeEnergyScan {
+          0% {
+            top: 0;
+            opacity: 1;
+          }
+          80% {
+            opacity: 1;
+          }
+          100% {
+            top: 100%;
+            opacity: 0;
+          }
+        }
+
+        @keyframes homeLabelReveal {
+          from {
+            opacity: 0;
+            letter-spacing: 0.5em;
+          }
+          to {
+            opacity: 1;
+            letter-spacing: 0.25em;
+          }
+        }
+
+        @keyframes homeIntroExit {
+          to {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .home-intro-label {
+            font-size: 9px;
+            letter-spacing: 0.15em;
+          }
+
+          .home-intro-code {
+            font-size: 8px;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .home-intro,
+          .home-intro-line,
+          .home-intro-label,
+          .home-intro-code {
+            animation-duration: 0.01ms !important;
+            animation-delay: 0ms !important;
+          }
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default HomeIntro;

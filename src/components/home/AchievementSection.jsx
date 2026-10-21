@@ -2,39 +2,61 @@ import { Link } from "react-router-dom";
 import SectionFade from "../SectionFade";
 
 const achievements = [
-  { value: "12", label: "Tournament Wins" },
-  { value: "08", label: "MVP Titles" },
-  { value: "25+", label: "Top Finishes" },
-  { value: "15", label: "Tournaments Played" },
-  { value: "03", label: "Team Titles" },
+  {
+    image:
+      "https://res.cloudinary.com/dycngnseq/image/upload/v1781731660/gamershub/achievements/zlwovzsb3kxw5gzkxhtu.jpg",
+  },
+  {
+    image:
+      "https://res.cloudinary.com/dycngnseq/image/upload/v1782673462/gamershub/achievements/yfox43zutu3i58dhr6fd.jpg",
+  },
+  {
+    image:
+      "https://dl.dir.freefiremobile.com/common/web_event/hash/0630756532c4ae833a27eb36c707519bjpg",
+  },
+  {
+    image:
+      "https://dl.dir.freefiremobile.com/common/web_event/hash/0630756532c4ae833a27eb36c707519bjpg",
+  },
 ];
 
-const AchievementCard = ({ value, label }) => (
-  <div className="group flex h-28 min-w-[230px] items-center gap-4 rounded-xl border border-blue-400/20 bg-[#09172B]/90 px-6 transition-[border-color,background-color] duration-300 hover:border-sky-300/70 hover:bg-[#102747] sm:min-w-[260px]">
-    <span className="text-4xl font-black tracking-tight text-white sm:text-5xl">
-      {value}
-    </span>
-    <span className="max-w-[110px] text-sm leading-snug text-blue-100/60 transition-colors group-hover:text-white">
-      {label}
-    </span>
+const AchievementCard = ({ image }) => (
+  <div className="group relative flex h-36 w-52 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-blue-400/20 bg-[#09172B]/90 p-2 transition-[border-color,box-shadow] duration-300 hover:border-sky-300/70 hover:shadow-[0_0_25px_rgba(56,189,248,0.18)] sm:h-44 sm:w-64">
+    <img
+      src={image}
+      alt="Player achievement"
+      loading="lazy"
+      decoding="async"
+      draggable="false"
+      className="block h-full w-full rounded-lg object-contain transition-transform duration-500 group-hover:scale-105"
+    />
   </div>
 );
 
-function AchievementTrack({ items, rowClass = "", reverse = false, duration = 32 }) {
+function AchievementTrack({
+  items,
+  rowClass = "",
+  reverse = false,
+  duration = 32,
+}) {
   return (
     <div className="overflow-hidden py-2">
       <div
-        className={`achievement-track flex w-max ${reverse ? "achievement-track-reverse" : ""} ${rowClass}`}
+        className={`achievement-track flex w-max ${reverse ? "achievement-track-reverse" : ""
+          } ${rowClass}`}
         style={{ "--scroll-duration": `${duration}s` }}
       >
         {[0, 1].map((copy) => (
           <div
             key={copy}
-            className="flex shrink-0 gap-4 pr-4"
+            className="flex shrink-0 items-center gap-4 pr-4"
             aria-hidden={copy === 1 ? "true" : undefined}
           >
-            {items.map((item) => (
-              <AchievementCard key={`${copy}-${item.label}`} {...item} />
+            {items.map((item, index) => (
+              <AchievementCard
+                key={`${copy}-${index}`}
+                {...item}
+              />
             ))}
           </div>
         ))}
@@ -42,6 +64,8 @@ function AchievementTrack({ items, rowClass = "", reverse = false, duration = 32
     </div>
   );
 }
+
+
 
 export default function AchievementSection({ username = "venom" }) {
   return (
@@ -87,7 +111,7 @@ export default function AchievementSection({ username = "venom" }) {
 
       <div className="relative z-10 mt-10 flex justify-center sm:mt-14">
         <Link
-          to={`/${username}/achievements`}
+          to={`/achievements`}
           className="group inline-flex items-center gap-3 rounded-lg border border-sky-400/40 bg-blue-500/10 px-6 py-3 text-sm font-semibold transition-[border-color,background-color,box-shadow] duration-300 hover:border-sky-300 hover:bg-blue-500/20 hover:shadow-[0_0_24px_rgba(56,189,248,0.16)]"
         >
           View All Achievements

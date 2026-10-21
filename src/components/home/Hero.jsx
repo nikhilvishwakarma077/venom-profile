@@ -1,17 +1,10 @@
 
-import { useEffect, useState } from "react";
 import charImg from "../../../public/assets/images/char1.webp";
 import SectionFade from "../SectionFade";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
 
-  const [intro, setIntro] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIntro(false), 1500);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <section
@@ -19,13 +12,6 @@ const Hero = () => {
       className="ff-hero relative isolate min-h-screen overflow-hidden bg-[#080b12] text-white"
     >
 
-      {intro && (
-        <div className="ff-intro" aria-hidden="true">
-          <div className="ff-intro-line" />
-          <span className="ff-intro-label">INITIALIZING PLAYER PROFILE</span>
-          <span className="ff-intro-code">FF.MAX // SYSTEM READY</span>
-        </div>
-      )}
 
       <style>{`
         .ff-hero {
@@ -91,65 +77,8 @@ const Hero = () => {
         }
 
         
-.ff-intro {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  pointer-events: none;
-  overflow: hidden;
-  background: #080b12;
-  animation: introExit 0.5s ease 1s forwards;
-}
 
-.ff-intro-line {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: #1683ff;
-  box-shadow: 0 0 25px #1683ff, 0 0 70px #0066ff;
-  animation: energyScan 1s cubic-bezier(.65, 0, .35, 1) forwards;
-}
 
-.ff-intro-label,
-.ff-intro-code {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: 'Oswald', sans-serif;
-  font-size: 11px;
-  letter-spacing: .25em;
-  white-space: nowrap;
-}
-
-.ff-intro-label {
-  top: 48%;
-  color: #fff;
-  animation: labelReveal .5s ease both;
-}
-
-.ff-intro-code {
-  top: 53%;
-  color: #1683ff;
-  font-size: 9px;
-  animation: labelReveal .5s ease .2s both;
-}
-
-@keyframes energyScan {
-  0% { top: 0; opacity: 1; }
-  80% { opacity: 1; }
-  100% { top: 100%; opacity: 0; }
-}
-
-@keyframes labelReveal {
-  from { opacity: 0; letter-spacing: .5em; }
-  to { opacity: 1; letter-spacing: .25em; }
-}
-
-@keyframes introExit {
-  to { opacity: 0; visibility: hidden; }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .ff-intro,
@@ -275,9 +204,7 @@ const Hero = () => {
           </div>
 
           <div className="ff-reveal ff-delay-1">
-            <p className="mb-2 text-xs font-semibold tracking-[.22em] text-white/40 sm:text-sm">
-              PLAYER PROFILE / 001
-            </p>
+            
 
             <h1 className="ff-heading text-[clamp(3.7rem,10.5vw,7.5rem)] uppercase sm:text-[clamp(5rem,8vw,7.5rem)] lg:text-[clamp(5.5rem,7.2vw,7.5rem)]">
               BUILT
@@ -322,7 +249,7 @@ const Hero = () => {
                 ROLE
               </p>
               <p className="mt-1 text-sm font-bold text-blue-400">
-                ASSAULTER / IGL
+                PRIMARY RUSHER
               </p>
             </div>
           </div>

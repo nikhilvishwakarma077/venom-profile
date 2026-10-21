@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Trophy, Shield, Users, Video, Clock3 } from "lucide-react";
 import bannerImg from "../../public/assets/images/banner1.png"
 import charImg from "../../public/assets/images/char1.webp"
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const [showAvatarPreview, setShowAvatarPreview] = useState(false);
@@ -19,7 +20,7 @@ const Profile = () => {
     role: "Primary Rusher",
     age: 21,
     country: "India",
-    languages: ["Hindi","Marathi","English"],
+    languages: ["Hindi", "Marathi", "English"],
     bio: "Competitive Free Fire MAX player focused on team coordination, smart rotations, and consistent tournament performance.",
     stats: { currentRank: "Heroic", kdRatio: "4.25", headshotPercentage: 68 },
     experience: { level: 72, yearsPlaying: 5, esportsExperience: 3 },
@@ -94,8 +95,8 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#070D18] py-2 text-white">
-
+    <div className="min-h-screen bg-[#070D18]  text-white">
+ 
       {/* BANNER */}
       <div className=" relative w-full overflow-hidden  aspect-4/1 max-h-80 min-h-35">
         <img
@@ -588,16 +589,18 @@ const Profile = () => {
           <div className="p-4 sm:p-5">
 
             <div className="mb-5 flex items-center gap-2">
-
-              <Video
-                className="text-sky-400"
-                size={18}
-              />
+              <Video className="text-sky-400" size={18} />
 
               <h2 className="text-lg font-semibold text-white">
                 Featured Clips
               </h2>
 
+              <Link
+                to={`/clips`}
+                className="ml-auto text-sm font-medium text-sky-400 transition hover:text-white"
+              >
+                View All →
+              </Link>
             </div>
 
             {userProfile?.clips?.[0]?.title == "" ||
@@ -624,7 +627,7 @@ const Profile = () => {
 
               <>
                 {/* MOBILE SCROLL */}
-                <div className="flex gap-4 overflow-x-auto pb-2 md:hidden">
+                <div className="flex gap-4 scrollbar-hide overflow-x-auto pb-2 md:hidden">
 
                   {userProfile.clips.map((clip, index) => (
 
@@ -747,16 +750,18 @@ const Profile = () => {
           <div className="p-4 sm:p-5">
 
             <div className="mb-5 flex items-center gap-2">
-
-              <Trophy
-                className="text-sky-400"
-                size={18}
-              />
+              <Trophy className="text-sky-400" size={18} />
 
               <h2 className="text-lg font-semibold text-white">
                 Achievements
               </h2>
 
+              <Link
+                to={`/achievements`}
+                className="ml-auto text-sm font-medium text-sky-400 transition hover:text-white"
+              >
+                View All →
+              </Link>
             </div>
 
             {userProfile?.achievements?.[0]?.title == "" ||
@@ -783,7 +788,7 @@ const Profile = () => {
 
               <>
                 {/* MOBILE SCROLL */}
-                <div className="flex gap-4 overflow-x-auto pb-2 md:hidden">
+                <div className="flex gap-4 scrollbar-hide overflow-x-auto pb-2 md:hidden">
 
                   {userProfile?.achievements.map((ach, index) => (
 
@@ -1007,6 +1012,8 @@ const Profile = () => {
         </div>
 
       )}
+
+
     </div>
   )
 }

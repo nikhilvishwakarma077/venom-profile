@@ -7,7 +7,7 @@ export default function Navbar({ username = "venom" }) {
 
   const links = [
     { label: "HOME", to: "/" },
-    { label: "PROFILE", to: `/${username}` },
+    { label: "PROFILE", to: `/profile` },
     { label: "CLIPS", to: `/clips` },
     { label: "ACHIEVEMENTS", to: `/achievements` },
     { label: "CONTACT", to: "/contact" },
@@ -18,17 +18,29 @@ export default function Navbar({ username = "venom" }) {
     }`;
 
   return (
-    <header className="relative z-50 border-b border-white/5 bg-[#080b12] backdrop-blur-xl">
-      <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-5 py-5 sm:px-8 lg:px-12 lg:py-6">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#080b12]/60 backdrop-blur-xl">
+      <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-5 py-5 sm:px-8 lg:px-12 lg:py-4">
         {/* Logo */}
-        <Link to="/" className="group flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center border border-blue-500/50 bg-blue-500/10 text-lg font-extrabold text-blue-400 transition group-hover:bg-blue-500 group-hover:text-white">
-            DL
-          </span>
-          <span className="text-sm font-extrabold tracking-[.12em] sm:text-base">
-            <span className="text-blue-500">VENOM</span>
+
+        <Link to="/" className="group flex items-center gap-3">
+          <div className="group relative h-10 w-10 shrink-0 overflow-hidden rounded-full border border-sky-400/40 bg-[#09172B] shadow-lg shadow-blue-500/20 transition-transform duration-300 group-hover:scale-105">
+            <img
+              src="/assets/images/char1.webp"
+              alt="Player character"
+              className="h-full w-full object-cover object-top"
+            />
+          </div>
+
+          <span className="flex flex-col leading-none">
+            <span className="text-base font-black italic tracking-[0.12em] text-white sm:text-lg">
+              DL <span className="text-sky-400">VENOM</span>
+            </span>
+            <span className="mt-1.5 text-[8px] font-semibold tracking-[0.28em] text-white/45">
+              ESPORTS ATHLETE
+            </span>
           </span>
         </Link>
+
 
         {/* Desktop navigation */}
         <nav className="hidden items-center gap-6 md:flex lg:gap-8">

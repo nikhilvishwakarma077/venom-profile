@@ -4,27 +4,28 @@ import charImg from "../../../public/assets/images/char1.webp";
 import { ArrowUp } from "lucide-react";
 
 
-export default function Footer({
-    username = "DL",
-    playerName = "DL VEMON",
-}) {
+export default function Footer() {
     return (
         <footer className="border-t border-blue-400/15 bg-[#070D18] px-5 py-6">
             <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                    <img
-                        src={charImg}
-                        alt="Player logo"
-                        className="h-9 w-9 rounded-full object-contain"
-                    />
+                <Link to="/" className="group flex items-center gap-3">
+          <div className="group relative h-10 w-10 shrink-0 overflow-hidden rounded-full border border-sky-400/40 bg-[#09172B] shadow-lg shadow-blue-500/20 transition-transform duration-300 group-hover:scale-105">
+            <img
+              src={charImg}
+              alt="Player character"
+              className="h-full w-full object-cover object-top"
+            />
+          </div>
 
-                    <Link
-                        to={`/${username}`}
-                        className="text-sm font-black tracking-[0.2em] text-sky-400 sm:text-base"
-                    >
-                        {playerName}
-                    </Link>
-                </div>
+          <span className="flex flex-col leading-none">
+            <span className="text-base font-black italic tracking-[0.12em] text-white sm:text-lg">
+              DL <span className="text-sky-400">VENOM</span>
+            </span>
+            <span className="mt-1.5 text-[8px] font-semibold tracking-[0.28em] text-white/45">
+              ESPORTS ATHLETE
+            </span>
+          </span>
+        </Link>
 
                 <button
                     onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
