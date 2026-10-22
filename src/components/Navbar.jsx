@@ -33,7 +33,7 @@ export default function Navbar({ username = "venom" }) {
 
           <span className="flex flex-col leading-none">
             <span className="text-base font-black italic tracking-[0.12em] text-white sm:text-lg">
-              DL <span className="text-sky-400">VENOM</span>
+              DL <span className="text-[#2B7FFF]">VENOM</span>
             </span>
             <span className="mt-1.5 text-[8px] font-semibold tracking-[0.28em] text-white/45">
               ESPORTS ATHLETE
